@@ -7,11 +7,11 @@ describe Robot do
     end
     it "should not place with invalid position" do
       @robot.place(-1,0,"NORTH")
-      @robot.report.should =~ /invalid/
+      @robot.report.should include "invalid"
     end
     it "should not place with invalid direction" do
       @robot.place(0,0,"DOWN")
-      @robot.report.should =~ /invalid/
+      @robot.report.should include "invalid"
     end
     it "should place with valid position and direction" do
       @robot.place(0,0,"SOUTH")
@@ -25,6 +25,7 @@ describe Robot do
     it "should not move if in an invalid state" do
       @robot.place(-1, 1, "NORTH")
       @robot.move
+      @robot.report.should include "invalid"
     end
     it "should not move into an invalid position" do
       @robot.place(3,4,"NORTH")
@@ -59,29 +60,31 @@ describe Robot do
     it "should not turn if in an invalid state" do
       @robot.place(-1, 1, "NORTH")
       @robot.left
+      @robot.report.should include "invalid"
       @robot.right
+      @robot.report.should include "invalid"
     end
     it "should turn left" do
       @robot.place(1,1,"NORTH")
       @robot.left
-      @robot.report.should =~ /WEST/
+      @robot.report.should include "WEST"
       @robot.left
-      @robot.report.should =~ /SOUTH/
+      @robot.report.should include "SOUTH"
       @robot.left
-      @robot.report.should =~ /EAST/
+      @robot.report.should include "EAST"
       @robot.left
-      @robot.report.should =~ /NORTH/
+      @robot.report.should include "NORTH"
     end
     it "should turn right" do
       @robot.place(1,1,"NORTH")
       @robot.right
-      @robot.report.should =~ /EAST/
+      @robot.report.should include "EAST"
       @robot.right
-      @robot.report.should =~ /SOUTH/
+      @robot.report.should include "SOUTH"
       @robot.right
-      @robot.report.should =~ /WEST/
+      @robot.report.should include "WEST"
       @robot.right
-      @robot.report.should =~ /NORTH/
+      @robot.report.should include "NORTH"
     end
   end
 end
