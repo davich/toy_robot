@@ -7,12 +7,12 @@ class RobotController
   end
   def read_input(filename="data/test.txt")
     File.open(filename).each_line do |command|
-      process_command(command)
+      process_command(command.chomp.strip)
     end
   end
 
   def process_command(command)
-    case command.strip
+    case command
     when /^PLACE (\d+),(\d+),([A-Z]+)$/
       @robot.place $1.to_i, $2.to_i, $3
     when 'MOVE' then @robot.move

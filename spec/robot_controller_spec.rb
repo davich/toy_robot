@@ -12,24 +12,24 @@ describe RobotController do
       @robot.should_receive(:place).with(1,2,"NORTH")
       @controller.process_command("PLACE 1,2,NORTH")
     end
-    it "should handle MOVE command" do
-      @robot.should_receive(:move)
-      @controller.process_command("MOVE")
-    end
-    it "should handle REPORT command" do
-      @robot.should_receive(:report)
-      @controller.process_command("REPORT")
-    end
-    it "should handle LEFT command" do
-      @robot.should_receive(:left)
-      @controller.process_command("LEFT")
-    end
-    it "should handle RIGHT command" do
-      @robot.should_receive(:right)
-      @controller.process_command("RIGHT")
+    for command in %w(MOVE REPORT LEFT RIGHT) do
+      it "should handle #{command} command" do
+        @robot.should_receive(command.downcase.to_sym)
+        @controller.process_command(command)
+      end
     end
     it "should handle unknown command" do
       @controller.process_command("PLACE 1,2,NO2TH")
+    end
+  end
+  describe "read_input" do
+    it "should read lines and process them" do
+      controller = RobotController.new
+      File.should_receive(:open).with("data/test.txt") { StringIO.new "LEFT\nRIGHT" }
+      controller.should_receive(:process_command).with("LEFT")
+      controller.should_receive(:process_command).with("RIGHT")
+
+      controller.read_input
     end
   end
 end
