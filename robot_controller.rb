@@ -1,19 +1,28 @@
 require './robot.rb'
 require './table.rb'
 
+class RobotController
+  def initialize
+    @robot = Robot.new(Table.new(5,5))
+  end
+  def read_input(filename="data/test.txt")
+    File.open(filename).each_line do |command|
+      process_command(command)
+    end
+  end
 
-robot = Robot.new(Table.new(5,5))
-$stdin.each do |command|
-  command_parts = command.strip.split(" ")
-  case command_parts[0]
-  when 'PLACE'
-    args = command_parts[1].split(",")
-    robot.place args[0].to_i, args[1].to_i, args[2]
-  when 'MOVE' then robot.move
-  when 'REPORT' then puts robot.report
-  when 'LEFT' then robot.left
-  when 'RIGHT' then robot.right
-  else
-    puts "Unknown command #{command_parts[0]}"
+  def process_command(command)
+    case command.strip
+    when /^PLACE (\d+),(\d+),([A-Z]+)$/
+      @robot.place $1.to_i, $2.to_i, $3
+    when 'MOVE' then @robot.move
+    when 'REPORT' then puts @robot.report
+    when 'LEFT' then @robot.left
+    when 'RIGHT' then @robot.right
+    else
+      puts "Unknown command #{command}"
+    end
   end
 end
+
+RobotController.new.read_input

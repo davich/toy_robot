@@ -1,2 +1,1 @@
-require_relative '../table.rb'
-require_relative '../robot.rb'
+require_relative '../robot_controller.rb'
