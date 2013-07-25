@@ -1,12 +1,28 @@
 class Robot
-  @@DIRECTIONS = %w(NORTH EAST SOUTH WEST)
-  @@LEFT = -1
-  @@RIGHT = 1
+  module Directions
+    LEFT = -1
+    RIGHT = 1
+    NORTH = 'NORTH'
+    SOUTH = 'SOUTH'
+    EAST = 'EAST'
+    WEST = 'WEST'
+    DIRECTIONS = [NORTH, EAST, SOUTH, WEST]
+    def self.left(current_direction)
+      turn(LEFT, current_direction)
+    end
+    def self.right(current_direction)
+      turn(RIGHT, current_direction)
+    end
+    def self.turn(modifier, current_direction)
+      new_index = (DIRECTIONS.index(current_direction) + modifier) % DIRECTIONS.size
+      DIRECTIONS[new_index]
+    end
+  end
   @@POSITION_MODIFIERS = {
-    'NORTH' => [0, 1],
-    'SOUTH' => [0, -1],
-    'EAST' => [1, 0],
-    'WEST' => [-1, 0]
+    Directions::NORTH => [0, 1],
+    Directions::SOUTH => [0, -1],
+    Directions::EAST => [1, 0],
+    Directions::WEST => [-1, 0]
   }
 
   def initialize(table)
@@ -35,11 +51,11 @@ class Robot
   end
 
   def left
-    turn(@@LEFT) if valid?
+    @direction = Directions::left(@direction) if valid?
   end
 
   def right
-    turn(@@RIGHT) if valid?
+    @direction = Directions::right(@direction) if valid?
   end
 
   def report
@@ -53,11 +69,6 @@ class Robot
   private
 
   def valid?(pos_x=@position_x, pos_y=@position_y, dir=@direction)
-    @@DIRECTIONS.include?(dir) && @table.valid_position?(pos_x, pos_y)
-  end
-
-  def turn(modifier)
-    new_index = (@@DIRECTIONS.index(@direction) + modifier) % @@DIRECTIONS.size
-    @direction = @@DIRECTIONS[new_index]
+    Directions::DIRECTIONS.include?(dir) && @table.valid_position?(pos_x, pos_y)
   end
 end

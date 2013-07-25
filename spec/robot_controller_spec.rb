@@ -4,7 +4,7 @@ describe RobotController do
   describe "process_command" do
     before (:each) do
       @controller = RobotController.new
-      @robot = mock("robot")
+      @robot = double("robot")
       @controller.instance_variable_set(:@robot, @robot)
     end
   
