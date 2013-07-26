@@ -1,4 +1,4 @@
-require './lib/direction.rb'
+require './lib/directions.rb'
 
 Position = Struct.new(:x, :y) do
   def +(position)
@@ -11,10 +11,10 @@ end
 
 class Robot
   @@POSITION_MODIFIERS = {
-    Direction.north => Position.new(0, 1),
-    Direction.south => Position.new(0, -1),
-    Direction.east => Position.new(1, 0),
-    Direction.west => Position.new(-1, 0)
+    Directions::NORTH => Position.new(0, 1),
+    Directions::SOUTH => Position.new(0, -1),
+    Directions::EAST => Position.new(1, 0),
+    Directions::WEST => Position.new(-1, 0)
   }
 
   def initialize(table)
@@ -22,7 +22,7 @@ class Robot
   end
 
   def place(position, dir)
-    direction = Direction.for(dir)
+    direction = Directions::Direction.for(dir)
     if valid?(position, direction)
       @position = position
       @direction = direction
@@ -55,7 +55,7 @@ class Robot
   private
 
   def valid?(position=@position, dir=@direction)
-    Direction.directions.include?(dir) && @table.valid_position?(position)
+    Directions::DIRECTIONS.include?(dir) && @table.valid_position?(position)
   end
 end
 
