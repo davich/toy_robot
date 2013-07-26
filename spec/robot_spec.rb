@@ -14,7 +14,7 @@ describe Robot do
       @robot.report.should include "invalid"
     end
     it "should place with valid position and direction" do
-      @robot.place(Position.new(0,0),"SOUTH")
+      @robot.place(Position.new(0,0), "SOUTH")
       @robot.report.should == "Robot is at position 0, 0; facing direction SOUTH"
     end
   end
