@@ -1,35 +1,38 @@
 require './lib/directions.rb'
+
+Position = Struct.new(:x, :y) do
+  def +(position)
+    Position.new(x+position.x, y+position.y)
+  end
+  def to_s
+    "#{x}, #{y}"
+  end
+end
+
 class Robot
   @@POSITION_MODIFIERS = {
-    Directions::NORTH => [0, 1],
-    Directions::SOUTH => [0, -1],
-    Directions::EAST => [1, 0],
-    Directions::WEST => [-1, 0]
+    Directions::NORTH => Position.new(0, 1),
+    Directions::SOUTH => Position.new(0, -1),
+    Directions::EAST => Position.new(1, 0),
+    Directions::WEST => Position.new(-1, 0)
   }
 
   def initialize(table)
     @table = table
   end
 
-  def place(pos_x, pos_y, dir)
-    if valid?(pos_x, pos_y, dir)
-      @position_x = pos_x
-      @position_y = pos_y
+  def place(position, dir)
+    if valid?(position, dir)
+      @position = position
       @direction = dir
     end
   end
 
   def move
-    return unless valid?
-
-    x_modifier, y_modifier = @@POSITION_MODIFIERS[@direction]
-
-    if @table.valid_position?(@position_x + x_modifier, @position_y + y_modifier)
-      @position_x += x_modifier
-      @position_y += y_modifier
+    if valid?
+      new_position = @position + @@POSITION_MODIFIERS[@direction]
+      @position = new_position if @table.valid_position?(new_position)
     end
-
-    [@position_x, @position_y]
   end
 
   def left
@@ -42,15 +45,16 @@ class Robot
 
   def report
     if valid?
-      "Robot is at position #{@position_x}, #{@position_y}; facing direction #{@direction}"
+      "Robot is at position #{@position}; facing direction #{@direction}"
     else
-      "Robot state is invalid. Position #{@position_x}, #{@position_y}, direction #{@direction}"
+      "Robot state is invalid. Position #{@position}, direction #{@direction}"
     end
   end
 
   private
 
-  def valid?(pos_x=@position_x, pos_y=@position_y, dir=@direction)
-    Directions::DIRECTIONS.include?(dir) && @table.valid_position?(pos_x, pos_y)
+  def valid?(position=@position, dir=@direction)
+    Directions::DIRECTIONS.include?(dir) && @table.valid_position?(position)
   end
 end
+

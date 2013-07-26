@@ -14,7 +14,7 @@ class RobotController
   def process_command(command)
     case command
     when /^PLACE (\d+),(\d+),([A-Z]+)$/
-      @robot.place $1.to_i, $2.to_i, $3
+      @robot.place Position.new($1.to_i, $2.to_i), $3
     when 'MOVE' then @robot.move
     when 'REPORT' then puts @robot.report
     when 'LEFT' then @robot.left

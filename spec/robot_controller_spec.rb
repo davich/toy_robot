@@ -9,7 +9,7 @@ describe RobotController do
     end
   
     it "should handle PLACE command" do
-      @robot.should_receive(:place).with(1,2,"NORTH")
+      @robot.should_receive(:place).with(Position.new(1,2),"NORTH")
       @controller.process_command("PLACE 1,2,NORTH")
     end
     for command in %w(MOVE REPORT LEFT RIGHT) do
