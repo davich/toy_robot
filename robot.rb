@@ -2,7 +2,7 @@ require './lib/direction.rb'
 require './lib/position.rb'
 
 class Robot
-  @@POSITION_MODIFIERS = {
+  POSITION_MODIFIERS = {
     Direction::NORTH => Position.new(0, 1),
     Direction::SOUTH => Position.new(0, -1),
     Direction::EAST => Position.new(1, 0),
@@ -23,7 +23,7 @@ class Robot
 
   def move
     if valid?
-      new_position = @position + @@POSITION_MODIFIERS[@direction]
+      new_position = @position + POSITION_MODIFIERS[@direction]
       @position = new_position if @table.valid_position?(new_position)
     end
   end

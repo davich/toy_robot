@@ -1,6 +1,6 @@
 class Direction
-  @@LEFT = -1
-  @@RIGHT = 1
+  LEFT = -1
+  RIGHT = 1
   def initialize(name)
     @name = name
   end
@@ -8,10 +8,10 @@ class Direction
     DIRECTIONS.find { |d| d.name == name }
   end
   def left
-    turn(@@LEFT)
+    turn(LEFT)
   end
   def right
-    turn(@@RIGHT)
+    turn(RIGHT)
   end
   def name
     @name
