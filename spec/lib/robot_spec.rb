@@ -7,15 +7,15 @@ describe Robot do
     end
     it "should not place with invalid position" do
       @robot.place(Position.new(-1,0),"NORTH")
-      @robot.report.should include "invalid"
+      expect(@robot.report).to include "invalid"
     end
     it "should not place with invalid direction" do
       @robot.place(Position.new(0,0),"DOWN")
-      @robot.report.should include "invalid"
+      expect(@robot.report).to include "invalid"
     end
     it "should place with valid position and direction" do
       @robot.place(Position.new(0,0), "SOUTH")
-      @robot.report.should == "Robot is at position (0, 0); facing direction SOUTH"
+      expect(@robot.report).to eq "Robot is at position (0, 0); facing direction SOUTH"
     end
   end
   describe "move" do
@@ -25,32 +25,32 @@ describe Robot do
     it "should not move if in an invalid state" do
       @robot.place(Position.new(-1, 1), "NORTH")
       @robot.move
-      @robot.report.should include "invalid"
+      expect(@robot.report).to include "invalid"
     end
     it "should not move into an invalid position" do
       @robot.place(Position.new(3,4),"NORTH")
       @robot.move
-      @robot.report.should include "3, 4"
+      expect(@robot.report).to include "3, 4"
     end
     it "should move SOUTH" do
       @robot.place(Position.new(2,2),"SOUTH")
       @robot.move
-      @robot.report.should include "2, 1"
+      expect(@robot.report).to include "2, 1"
     end
     it "should move NORTH" do
       @robot.place(Position.new(2,2),"NORTH")
       @robot.move
-      @robot.report.should include "2, 3"
+      expect(@robot.report).to include "2, 3"
     end
     it "should move EAST" do
       @robot.place(Position.new(2,2),"EAST")
       @robot.move
-      @robot.report.should include "3, 2"
+      expect(@robot.report).to include "3, 2"
     end
     it "should move WEST" do
       @robot.place(Position.new(2,2),"WEST")
       @robot.move
-      @robot.report.should include "1, 2"
+      expect(@robot.report).to include "1, 2"
     end
   end
   describe "turning" do
@@ -60,31 +60,31 @@ describe Robot do
     it "should not turn if in an invalid state" do
       @robot.place(Position.new(-1, 1), "NORTH")
       @robot.left
-      @robot.report.should include "invalid"
+      expect(@robot.report).to include "invalid"
       @robot.right
-      @robot.report.should include "invalid"
+      expect(@robot.report).to include "invalid"
     end
     it "should turn left" do
       @robot.place(Position.new(1,1),"NORTH")
       @robot.left
-      @robot.report.should include "WEST"
+      expect(@robot.report).to include "WEST"
       @robot.left
-      @robot.report.should include "SOUTH"
+      expect(@robot.report).to include "SOUTH"
       @robot.left
-      @robot.report.should include "EAST"
+      expect(@robot.report).to include "EAST"
       @robot.left
-      @robot.report.should include "NORTH"
+      expect(@robot.report).to include "NORTH"
     end
     it "should turn right" do
       @robot.place(Position.new(1,1),"NORTH")
       @robot.right
-      @robot.report.should include "EAST"
+      expect(@robot.report).to include "EAST"
       @robot.right
-      @robot.report.should include "SOUTH"
+      expect(@robot.report).to include "SOUTH"
       @robot.right
-      @robot.report.should include "WEST"
+      expect(@robot.report).to include "WEST"
       @robot.right
-      @robot.report.should include "NORTH"
+      expect(@robot.report).to include "NORTH"
     end
   end
 end

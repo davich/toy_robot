@@ -1,5 +1,5 @@
-require './robot.rb'
-require './table.rb'
+require './lib/robot.rb'
+require './lib/table.rb'
 
 class RobotController
   def initialize

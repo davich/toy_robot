@@ -1,21 +1,24 @@
 class Direction
   LEFT = -1
   RIGHT = 1
+  attr_reader :name
+
   def initialize(name)
     @name = name
   end
+
   def self.for(name)
     DIRECTIONS.find { |d| d.name == name }
   end
+
   def left
     turn(LEFT)
   end
+
   def right
     turn(RIGHT)
   end
-  def name
-    @name
-  end
+
   def to_s
     @name
   end
