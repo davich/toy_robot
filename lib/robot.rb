@@ -1,31 +1,21 @@
-require './lib/direction.rb'
-require './lib/position.rb'
+require_relative 'direction'
+require_relative 'position'
 
 class Robot
-  POSITION_MODIFIERS = {
-    Direction::NORTH => Position.new(0, 1),
-    Direction::SOUTH => Position.new(0, -1),
-    Direction::EAST => Position.new(1, 0),
-    Direction::WEST => Position.new(-1, 0)
-  }
-
   def initialize(table)
     @table = table
   end
 
-  def place(position, dir)
-    direction = Direction.for(dir)
-    if valid?(position, direction)
-      @position = position
-      @direction = direction
-    end
+  def place(position, direction)
+    return unless valid?(direction, position)
+
+    @position = position
+    @direction = direction
   end
 
   def move
-    if valid?
-      new_position = @position + POSITION_MODIFIERS[@direction]
-      @position = new_position if @table.valid_position?(new_position)
-    end
+    return unless valid?
+    @position = next_position if @table.valid_position?(next_position)
   end
 
   def left
@@ -37,17 +27,16 @@ class Robot
   end
 
   def report
-    if valid?
-      "Robot is at position #{@position}; facing direction #{@direction}"
-    else
-      "Robot state is invalid. Position #{@position}, direction #{@direction}"
-    end
+    "Robot is at position #{@position}; facing direction #{@direction}" if valid?
   end
 
   private
 
-  def valid?(position=@position, dir=@direction)
-    Direction::DIRECTIONS.include?(dir) && @table.valid_position?(position)
+  def next_position
+    @position.move(@direction)
+  end
+
+  def valid?(dir=@direction, position=@position)
+    Direction.valid?(dir) && @table.valid_position?(position)
   end
 end
-

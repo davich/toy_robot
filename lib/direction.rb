@@ -11,6 +11,10 @@ class Direction
     DIRECTIONS.find { |d| d.name == name }
   end
 
+  def self.valid?(direction)
+    DIRECTIONS.include? direction
+  end
+
   def left
     turn(LEFT)
   end

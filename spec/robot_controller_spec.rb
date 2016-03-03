@@ -9,7 +9,7 @@ describe RobotController do
     end
 
     it "handles PLACE command" do
-      expect(@robot).to receive(:place).with(Position.new(1,2),"NORTH")
+      expect(@robot).to receive(:place).with(Position.new(1,2),Direction.for("NORTH"))
       @controller.process_command("PLACE 1,2,NORTH")
     end
     for command in %w(MOVE REPORT LEFT RIGHT) do
