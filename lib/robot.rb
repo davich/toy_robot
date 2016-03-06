@@ -7,7 +7,7 @@ class Robot
   end
 
   def place(position, direction)
-    return unless valid?(direction, position)
+    return unless valid?(position, direction)
 
     @position = position
     @direction = direction
@@ -15,7 +15,8 @@ class Robot
 
   def move
     return unless valid?
-    @position = next_position if @table.valid_position?(next_position)
+
+    @position = next_position if valid?(next_position)
   end
 
   def left
@@ -36,7 +37,7 @@ class Robot
     @position.move(@direction)
   end
 
-  def valid?(dir=@direction, position=@position)
+  def valid?(position=@position, dir=@direction)
     Direction.valid?(dir) && @table.valid_position?(position)
   end
 end

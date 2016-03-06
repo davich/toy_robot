@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Robot do
-  describe "place" do
+  describe "#place" do
     before(:each) do
       @robot = Robot.new(Table.new(5,5))
     end
@@ -18,7 +18,8 @@ describe Robot do
       expect(@robot.report).to eq "Robot is at position (0, 0); facing direction SOUTH"
     end
   end
-  describe "move" do
+
+  describe "#move" do
     before(:each) do
       @robot = Robot.new(Table.new(5,5))
     end
@@ -53,6 +54,7 @@ describe Robot do
       expect(@robot.report).to include "1, 2"
     end
   end
+  
   describe "turning" do
     before(:each) do
       @robot = Robot.new(Table.new(5,5))

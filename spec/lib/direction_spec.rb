@@ -26,6 +26,6 @@ describe Direction do
   it "should not allow creation of new direction" do
     expect do
       Direction.new("blah")
-    end.to raise_error
+    end.to raise_error(NoMethodError, "private method `new' called for Direction:Class")
   end
 end

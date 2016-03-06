@@ -1,6 +1,4 @@
 class Position
-  attr_accessor :x, :y
-
   def initialize(x, y)
     self.x = x
     self.y = y
@@ -19,11 +17,22 @@ class Position
   end
 
   def ==(other)
-    self.x == other.x && self.y == other.y
+    x == other.x && y == other.y
   end
 
+  def eql?(other)
+   self == other
+  end
+
+  def hash
+    [x, y].hash
+  end
+
+  protected
+  attr_accessor :x, :y
+
   def +(position)
-    Position.new(x+position.x, y+position.y)
+    Position.new(x + position.x, y + position.y)
   end
 
   POSITION_MODIFIERS = {
